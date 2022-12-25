@@ -7,11 +7,14 @@ import { StoreModule } from '@ngrx/store';
 import { bookReducer } from './store/books.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { BooksEffect } from './store/books.effect';
+import { AddComponent } from './add/add.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [HomeComponent, AddComponent],
   imports: [
     CommonModule,
+    FormsModule,
     BooksRoutingModule,
     StoreModule.forFeature('mybooks', bookReducer),
     EffectsModule.forFeature([BooksEffect]),

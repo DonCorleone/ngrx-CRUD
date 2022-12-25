@@ -11,6 +11,12 @@
       "author": "Lewis Carroll",
       "name": "Alice's Adventures in Wonderland",
       "cost": 340
+    },
+    {
+      "id": 3,
+      "author": "Lini",
+      "name": "The Art of NgRx",
+      "cost": 77
     }
   ]
 }

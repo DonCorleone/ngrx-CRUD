@@ -2,16 +2,24 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { BooksService } from '../books.service';
 import { Store, select } from '@ngrx/store';
-import { EMPTY, map, mergeMap, withLatestFrom } from 'rxjs';
-import { invokeBooksAPI, booksFetchAPISuccess } from './books.action';
+import { EMPTY, map, mergeMap, switchMap, withLatestFrom } from 'rxjs';
+import {
+  invokeBooksAPI,
+  booksFetchAPISuccess,
+  invokeSaveNewBookAPI,
+  saveNewBookAPISucess,
+} from './books.action';
 import { selectBooks } from './books.selector';
+import { setAPIStatus } from 'src/app/shared/store/app.action';
+import { Appstate } from 'src/app/shared/store/appstate';
 
 @Injectable()
 export class BooksEffect {
   constructor(
     private actions$: Actions,
     private booksService: BooksService,
-    private store: Store
+    private store: Store,
+    private appStore: Store<Appstate>
   ) {}
   loadAllBooks$ = createEffect(() =>
     this.actions$.pipe(
@@ -32,4 +40,25 @@ export class BooksEffect {
       })
     )
   );
+
+  saveNewBook$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(invokeSaveNewBookAPI),
+      switchMap((action) => {
+        this.appStore.dispatch(
+          setAPIStatus({ apiStatus: { apiResponseMessage: '', apiStatus: '' } })
+        );
+        return this.booksService.create(action.newBook).pipe(
+          map((data) => {
+            this.appStore.dispatch(
+              setAPIStatus({
+                apiStatus: { apiResponseMessage: '', apiStatus: 'success' },
+              })
+            );
+            return saveNewBookAPISucess({ newBook: data });
+          })
+        );
+      })
+    );
+  });
 }

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Books } from './books';
+import { Book as Book } from './books';
 
 // this action going to invoke the API call.
 export const invokeBooksAPI = createAction(
@@ -9,5 +9,14 @@ export const invokeBooksAPI = createAction(
 // this action method invoked after the API
 export const booksFetchAPISuccess = createAction(
   '[Books API] Fetch API Success',
-  props<{ allBooks: Books[] }>()
+  props<{ allBooks: Book[] }>()
+);
+
+export const invokeSaveNewBookAPI = createAction(
+  '[Books API] Inovke save new book api',
+  props<{ newBook: Book }>()
+);
+export const saveNewBookAPISucess = createAction(
+  '[Books API] save new book api success',
+  props<{ newBook: Book }>()
 );

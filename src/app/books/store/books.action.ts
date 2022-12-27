@@ -5,13 +5,11 @@ import { Book as Book } from './books';
 export const invokeBooksAPI = createAction(
   '[Books API] Invoke Books Fetch API'
 );
-
 // this action method invoked after the API
 export const booksFetchAPISuccess = createAction(
   '[Books API] Fetch API Success',
   props<{ allBooks: Book[] }>()
 );
-
 export const invokeSaveNewBookAPI = createAction(
   '[Books API] Inovke save new book api',
   props<{ newBook: Book }>()
@@ -19,4 +17,12 @@ export const invokeSaveNewBookAPI = createAction(
 export const saveNewBookAPISucess = createAction(
   '[Books API] save new book api success',
   props<{ newBook: Book }>()
+);
+export const invokeUpdateBookAPI = createAction(
+  '[Books API] Inovke update book api',
+  props<{ updateBook: Book }>()
+);
+export const updateBookAPISucess = createAction(
+  '[Books API] update  book api success',
+  props<{ updateBook: Book }>()
 );
